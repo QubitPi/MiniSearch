@@ -1,44 +1,38 @@
-name: On Push To Main
+name: On Push To Master
 on:
   push:
-    branches: ["main"]
+    branches: ["master"]
 jobs:
   test-lint-ping:
     uses: ./.github/workflows/reusable-test-lint-ping.yml
   build-and-push-image:
     needs: [test-lint-ping]
-    name: Publish Docker image to GitHub Packages
+    name: Publish Docker image to Docker Hub
     runs-on: ubuntu-latest
-    env:
-      REGISTRY: ghcr.io
-      IMAGE_NAME: ${{ github.repository }}
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
+      - name: Login to DockerHub
+        if: github.ref == 'refs/heads/master'
+        uses: docker/login-action@v2
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+          username: jack20191124
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push image to DockerHub
+        if: github.ref == 'refs/heads/master'
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
+          tags: jack20191124/mini-search:latest
+      - name: Push image Description
+        if: github.ref == 'refs/heads/master'
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: jack20191124
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: jack20191124/mini-search
+          readme-filepath: README.md
   sync-to-hf:
     needs: [test-lint-ping]
     name: Sync to HuggingFace Spaces
@@ -50,7 +44,7 @@ jobs:
       - uses: JacobLinCool/huggingface-sync@v1
         with:
           github: ${{ secrets.GITHUB_TOKEN }}
-          user: ${{ vars.HF_SPACE_OWNER }}
-          space: ${{ vars.HF_SPACE_NAME }}
+          user: QubitPi
+          space: miniSearch
           token: ${{ secrets.HF_TOKEN }}
           configuration: "hf-space-config.yml"
