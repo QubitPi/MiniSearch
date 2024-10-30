@@ -1,8 +1,14 @@
+[![Hugging Face space badge]][Hugging Face space URL]
+[![GitHub workflow status badge][GitHub workflow status badge]][GitHub workflow status URL]
+[![Hugging Face sync status badge]][Hugging Face sync status URL]
+[![Docker Hub][Docker Pulls Badge]][Docker Hub URL]
+[![Apache License Badge]][Apache License, Version 2.0]
+
 # MiniSearch
 
 A minimalist web-searching app with an AI assistant that runs directly from your browser.
 
-Live demo: https://felladrin-minisearch.hf.space
+Live demo: https://huggingface.co/spaces/QubitPi/miniSearch
 
 ## Screenshot
 
@@ -16,7 +22,7 @@ Live demo: https://felladrin-minisearch.hf.space
 - **Integrated**: Search from the browser address bar by setting it as the default search engine
 - **Efficient**: Models are loaded and cached only when needed
 - **Customizable**: Tweakable settings for search results and text generation
-- **Open-source**: [The code is available for inspection and contribution at GitHub](https://github.com/felladrin/MiniSearch)
+- **Open-source**: [The code is available for inspection and contribution at GitHub](https://github.com/QubitPi/MiniSearch)
 
 ## Prerequisites
 
@@ -26,10 +32,10 @@ Live demo: https://felladrin-minisearch.hf.space
 
 Here are the easiest ways to get started with MiniSearch. Pick the one that suits you best.
 
-**Option 1** - Use [MiniSearch's Docker Image](https://github.com/felladrin/MiniSearch/pkgs/container/minisearch) by running in your terminal:
+**Option 1** - Use [MiniSearch's Docker Image][Docker Hub URL] by running:
 
 ```bash
-docker run -p 7860:7860 ghcr.io/felladrin/minisearch:main
+docker run -p 7860:7860 jack20191124/mini-search:main
 ```
 
 **Option 2** - Add MiniSearch's Docker Image to your existing Docker Compose file:
@@ -37,7 +43,7 @@ docker run -p 7860:7860 ghcr.io/felladrin/minisearch:main
 ```yaml
 services:
   minisearch:
-    image: ghcr.io/felladrin/minisearch:main
+    image: jack20191124/mini-search:latest
     ports:
       - "7860:7860"
 ```
@@ -123,3 +129,22 @@ Once the container is running, open http://localhost:7860 in your browser and st
     <li>HuggingFace only accepts a single docker image. It doesn't run docker compose or multiple images, unfortunately.</li>
   </ul>
 </details>
+
+License
+-------
+
+The use and distribution terms for [MiniSearch]() are covered by the [Apache License, Version 2.0].
+
+[Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
+[Apache License, Version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
+
+[Docker Pulls Badge]: https://img.shields.io/docker/pulls/jack20191124/mini-search?style=for-the-badge&logo=docker&color=2596EC
+[Docker Hub URL]: https://hub.docker.com/r/jack20191124/mini-search
+
+[GitHub workflow status badge]: https://img.shields.io/github/actions/workflow/status/QubitPi/MiniSearch/on-push-to-main.yml?branch=master&style=for-the-badge&logo=github&logoColor=white&label=CI/CD
+[GitHub workflow status URL]: https://github.com/QubitPi/MiniSearch/actions/workflows/on-push-to-main.yml
+
+[Hugging Face space badge]: https://img.shields.io/badge/Hugging%20Face%20Space-MiniSearch-FFD21E?style=for-the-badge&logo=huggingface&logoColor=white
+[Hugging Face space URL]: https://huggingface.co/spaces/QubitPi/miniSearch
+[Hugging Face sync status badge]: https://img.shields.io/github/actions/workflow/status/QubitPi/MiniSearch/on-push-to-main.yml?branch=master&style=for-the-badge&logo=github&logoColor=white&label=Hugging%20Face%20Sync%20Up
+[Hugging Face sync status URL]: https://github.com/QubitPi/MiniSearch/actions/workflows/on-push-to-main.yml
